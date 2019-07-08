@@ -12,6 +12,8 @@ public class ThreadTest {
 
 class MyThread implements Runnable{
 	
+	private int a = 100;
+	
 	private String name;
 
 	public void setName(String name) {
@@ -34,8 +36,13 @@ class MyThread implements Runnable{
 	@Override
 	public void run() {
 		System.out.println("开启线程："+Thread.currentThread().getName());
-		for (int i = 0; i < 10; i++) {
-			System.out.println(name +Thread.currentThread().getName()+"——"+i);
+		while(a>0){
+			synchronized (this) {
+				if(a>0) {
+					System.out.println(name +Thread.currentThread().getName()+"抢到了第"+a+"张票");
+					a--;
+				}
+			}
 		}
 	}
 	
